@@ -1,3 +1,3 @@
-Add new events at `/events/new`
-See all events at `/events`
-See all bookings at `/bookings`
+Add new events at `/events/new`<br />
+See all events at `/events`<br />
+See all bookings at `/bookings`<br />
