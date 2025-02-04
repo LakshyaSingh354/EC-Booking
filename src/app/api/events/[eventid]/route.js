@@ -1,11 +1,16 @@
 import { connectDB } from "@/lib/mongodb";
 import { Event } from "@/models/Events";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { use } from "react";
 
-export async function GET(req: Request, { params }: { params: { eventid: string } }) {
+export async function GET(
+  request,
+  context,
+) {
   await connectDB();
-  const event = await Event.findById(params.eventid);
-  console.log(`Event ID from route.ts::${event}`)
+  const eventid = context.params.eventid;
+  const event = await Event.findById(eventid);
+  
   if (!event) {
     return NextResponse.json({ error: "Event not found" }, { status: 404 });
   }
