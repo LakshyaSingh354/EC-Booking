@@ -4,8 +4,8 @@ import { connectDB } from "@/lib/mongodb";
 import { Event } from "@/models/Events";
 
 const razorpay = new Razorpay({
-	key_id: process.env.RAZORPAY_KEY_ID!, // Replace with your Razorpay key ID
-	key_secret: process.env.RAZORPAY_KEY_SECRET, // Replace with your Razorpay secret key
+	key_id: process.env.RAZORPAY_KEY_ID!,
+	key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
 export async function POST(req: Request) {
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
 
 		// Create a Razorpay order
 		const order = await razorpay.orders.create({
-			amount: event.price * 100, // Razorpay expects the amount in paise (1 INR = 100 paise)
+			amount: event.price * 100, // Razorpay expects the amount in paise
 			currency: "INR",
 			receipt: `order_receipt_${Date.now()}`,
 			notes: {
