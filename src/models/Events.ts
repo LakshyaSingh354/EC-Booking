@@ -2,6 +2,7 @@ import mongoose, { Schema, Document, model } from "mongoose";
 
 export interface IEvent extends Document {
   user: mongoose.Schema.Types.ObjectId;
+  consultants: mongoose.Schema.Types.ObjectId[];
   title: string;
   description?: string;
   duration: number; // in minutes
@@ -10,11 +11,13 @@ export interface IEvent extends Document {
     startTime: string; // "09:00"
     endTime: string; // "17:00"
   }[];
+  price: number;
 }
 
 const EventSchema = new Schema<IEvent>(
   {
     user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    consultants: [{ type: Schema.Types.ObjectId, ref: "Consultant", required: true }],
     title: { type: String, required: true },
     description: { type: String },
     duration: { type: Number, required: true },
@@ -25,6 +28,7 @@ const EventSchema = new Schema<IEvent>(
         endTime: { type: String, required: true },
       },
     ],
+    price: { type: Number, required: true },
   },
   { timestamps: true }
 );

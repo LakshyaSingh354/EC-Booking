@@ -16,7 +16,7 @@ export async function POST(req: Request) {
 
 export async function GET() {
     await connectDB();
-    const events = await Event.find().populate("user");
+    const events = await Event.find().populate("user").populate("consultants");
     return NextResponse.json(events);
   }
   
