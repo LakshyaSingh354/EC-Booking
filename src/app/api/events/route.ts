@@ -1,6 +1,7 @@
 import { connectDB } from "@/lib/mongodb";
 import { Event } from "@/models/Events";
 import { NextResponse } from "next/server";
+import { Consultant } from "@/models/Consultants";
 
 export async function POST(req: Request) {
   try {
@@ -16,7 +17,7 @@ export async function POST(req: Request) {
 
 export async function GET() {
     await connectDB();
-    const events = await Event.find().populate("user").populate("consultants");
+    const events = await Event.find().populate("user consultants");
     return NextResponse.json(events);
   }
   

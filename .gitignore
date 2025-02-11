@@ -39,3 +39,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+ec-booking-e734f-firebase-adminsdk-fbsvc-5f1f0824e8.json
