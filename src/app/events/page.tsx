@@ -23,6 +23,7 @@ export default function EventsPage() {
 	const router = useRouter();
 
 	useEffect(() => {
+		fetch("/api/consultants")
 		fetch("/api/events")
 			.then((res) => res.json())
 			.then(setEvents);
