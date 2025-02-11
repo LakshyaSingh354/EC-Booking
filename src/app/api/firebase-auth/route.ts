@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { NextRequest, NextResponse } from "next/server";
 import { verifyIdToken } from "@/lib/firebaseAdmin";
 import { connectDB } from "@/lib/mongodb";
@@ -28,7 +30,7 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    return NextResponse.json({ message: "User saved successfully", user }, { status: 201 });
+    return NextResponse.json({ message: "User saved successfully" }, { status: 201 });
   } catch (error) {
     console.error("Auth Error:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });

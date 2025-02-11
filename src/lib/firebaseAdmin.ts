@@ -1,10 +1,13 @@
 import admin from "firebase-admin";
-import path from "path";
 
+if (!process.env.FIREBASE_SERVICE_ACCOUNT_KEY) {
+  throw new Error("Missing FIREBASE_SERVICE_ACCOUNT_KEY environment variable");
+}
 
-const serviceAccount = path.join(process.cwd(), "ec-booking-e734f-firebase-adminsdk-fbsvc-5f1f0824e8.json");
-
-// const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY as string);
+// Decode the base64 string back to JSON
+const serviceAccount = JSON.parse(
+  Buffer.from(process.env.FIREBASE_SERVICE_ACCOUNT_KEY, "base64").toString("utf-8")
+);
 
 if (!admin.apps.length) {
   admin.initializeApp({
