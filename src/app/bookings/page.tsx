@@ -37,7 +37,7 @@ export default function BookingsPage() {
   if (!session) return <p>Please log in to view your bookings.</p>;
 
   return (
-    <div className="max-w-4xl mx-auto mt-10">
+    <div className="max-w-4xl mx-auto mt-28">
       <h1 className="text-3xl font-bold text-center">My Bookings</h1>
       <ul className="mt-8 space-y-4">
         {bookings.map((booking) => (
