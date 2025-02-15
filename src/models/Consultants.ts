@@ -4,7 +4,8 @@ export interface IConsultant extends Document {
   name: string;
   email: string;
   avatar?: string;
-  // event: mongoose.Schema.Types.ObjectId;
+  googleAccessToken: { type: String },
+  googleRefreshToken: { type: String },
 }
 
 const ConsultantSchema = new Schema<IConsultant>(
@@ -12,7 +13,8 @@ const ConsultantSchema = new Schema<IConsultant>(
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     avatar: { type: String, default: "default-avatar.jpeg" },
-    // event: { type: Schema.Types.ObjectId, ref: "Event", required: true },
+    googleAccessToken: { type: String },
+  googleRefreshToken: { type: String },
   },
 );
 

@@ -1,9 +1,12 @@
 import { connectDB } from "@/lib/mongodb";
 import { Event } from "@/models/Events";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { Consultant } from "@/models/Consultants";
 
-export async function POST(req: Request) {
+import mongoose, { ObjectId } from "mongoose";
+import { authenticate } from "@/app/middleware/authMiddleware";
+
+export async function POST(req: NextRequest) {
   try {
     await connectDB();
     const data = await req.json();

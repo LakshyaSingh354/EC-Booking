@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/auth/[...nextauth].ts", "src/lib/mongodb.ts", "src/app/api/events/[eventid]/route.js", "src/app/api/consultants/[consultantid]/route.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/auth/[...nextauth].ts", "src/lib/mongodb.ts", "src/app/api/events/[eventid]/route.js", "src/app/api/consultants/[consultantid]/route.js", "src/app/api/bookings/[consultantid]/route.js"],
   "exclude": ["node_modules"]
 }

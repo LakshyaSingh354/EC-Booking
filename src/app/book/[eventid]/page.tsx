@@ -54,7 +54,6 @@ export default function BookEventPage() {
       startTime,
       endTime,
     };
-
     // Create a Razorpay order
     const paymentRes = await fetch("/api/payment/createOrder", {
       method: "POST",

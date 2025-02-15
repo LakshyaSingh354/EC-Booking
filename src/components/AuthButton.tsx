@@ -1,15 +1,67 @@
 "use client";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { Session } from "next-auth";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+interface CustomUser {
+  id: string;
+  _id: string; // Add MongoDB _id
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+}
+interface ExtendedUser extends CustomUser {
+  role: "user" | "consultant";
+}
+
+interface ExtendedSession extends Session {
+  user: ExtendedUser;
+}
 
 export default function AuthButton() {
-  const { data: session } = useSession();
+  const { data: session } = useSession() as { data: ExtendedSession | null };
+  const router = useRouter();
+  const [showRoleSelection, setShowRoleSelection] = useState(false);
 
-  return session ? (
+  function handleSignIn(role: "user" | "consultant") {
+    localStorage.setItem("authRole", role); // Store in case needed later
+    document.cookie = `authRole=${role}; path=/;`;
+	  signIn("google");
+  }
+
+  // Redirect user based on role after login
+  useEffect(() => {
+    if (session) {
+      if (session.user!.role === "consultant") {
+        router.push("/consultant-dashboard");
+      } else {
+        router.push("/home");
+      }
+    }
+  }, [session, router]);
+
+  return (
     <div>
-      <p>Welcome, {session.user?.name}!</p>
-      <button onClick={() => signOut()}>Sign out</button>
+      {session ? (
+        <div>
+          <p>Welcome, {session.user?.name}!</p>
+          <button onClick={() => signOut()}>Sign out</button>
+        </div>
+      ) : (
+        <div>
+          <button onClick={() => setShowRoleSelection(true)}>Sign in with Google</button>
+
+          {showRoleSelection && (
+            <div className="modal">
+              <p>Are you signing in as a:</p>
+              <button onClick={() => handleSignIn("user")}>User</button>
+              <button onClick={() => handleSignIn("consultant")}>Consultant</button>
+            </div>
+          )}
+        </div>
+      )}
     </div>
-  ) : (
-    <button onClick={() => signIn("google")}>Sign in with Google</button>
   );
 }

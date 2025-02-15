@@ -1,5 +1,6 @@
 "use client";
 
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -22,17 +23,40 @@ export default function EventsPage() {
 	const [events, setEvents] = useState<Event[]>([]);
 	const router = useRouter();
 
+	const fetchWithRetry = async (retries = 5) => {
+		const url = "/api/events";
+		for (let i = 0; i < retries; i++) {
+			try {
+				fetch("/api/user");
+				fetch("/api/consultants");
+				const response = await fetch(url);
+				if (response.status === 500) {
+					console.warn(`Retrying due to 500 error: Attempt ${i + 1}`);
+					continue;
+				}
+				return await response.json(); // Break if no 500 error
+			} catch (error) {
+				console.error("Network error:", error);
+			}
+		}
+		throw new Error(`Failed to fetch ${url} after ${retries} retries.`);
+	};
+
 	useEffect(() => {
-		fetch("/api/user")
-		fetch("/api/consultants")
-		fetch("/api/events")
-			.then((res) => res.json())
-			.then(setEvents);
+		fetchWithRetry()
+			.then(setEvents)
+			.catch((error) => console.error(error));
 	}, []);
 
 	return (
 		<div className="w-1/2 mx-auto mt-28">
 			<h1 className="text-2xl font-bold">Available Events</h1>
+			<button
+				onClick={() => signOut({ callbackUrl: "/" })}
+				className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg"
+			>
+				Logout
+			</button>
 			<ul className="mt-4 space-y-4">
 				{events.map((event) => (
 					<li
@@ -45,7 +69,10 @@ export default function EventsPage() {
 							</span>
 							<div className="mt-2 space-x-4 flex">
 								{event.consultants.map((consultant) => (
-									<Link href={`/book/${event._id}?consultantId=${consultant._id}`} key={consultant._id}>
+									<Link
+										href={`/book/${event._id}?consultantId=${consultant._id}`}
+										key={consultant._id}
+									>
 										<div
 											key={consultant._id}
 											className="p-4 w-fit"

@@ -8,6 +8,7 @@ export interface IBooking extends Document {
     guestName: string;
     startTime: Date;
     endTime: Date;
+    meetLink?: string;
   }
   
   const BookingSchema = new Schema<IBooking>(
@@ -19,6 +20,7 @@ export interface IBooking extends Document {
       guestName: { type: String, required: true },
       startTime: { type: Date, required: true },
       endTime: { type: Date, required: true },
+      meetLink: { type: String },
     },
     { timestamps: true }
   );
