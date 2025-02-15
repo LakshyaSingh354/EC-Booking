@@ -61,7 +61,9 @@ export async function POST(req: NextRequest) {
 
 		const meetLink = await createGoogleMeet(
 			consultant._id,
-			data.guestEmail
+			data.guestEmail,
+      data.startTime,
+      data.endTime
 		);
 		console.log("Meet Link::", meetLink);
 		// Create booking

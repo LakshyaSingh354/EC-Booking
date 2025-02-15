@@ -1,5 +1,6 @@
 import { google } from "googleapis";
 import { Consultant } from "@/models/Consultants";
+import { Event } from "@/models/Events";
 
 async function refreshAccessToken(consultant: any) {
   if (!consultant.googleRefreshToken) {
@@ -28,23 +29,24 @@ async function refreshAccessToken(consultant: any) {
   }
 }
 
-export async function createGoogleMeet(consultantId: string, userEmail: string) {
+export async function createGoogleMeet(consultantId: string, userEmail: string, startTime: string, endTime: string) {
   try {
     const consultant = await Consultant.findById(consultantId);
     if (!consultant || !consultant.googleAccessToken) {
       throw new Error("Consultant not found or missing Google credentials.");
     }
 
+  
+
     const oauth2Client = new google.auth.OAuth2();
     oauth2Client.setCredentials({ access_token: consultant.googleAccessToken });
 
     const calendar = google.calendar({ version: "v3", auth: oauth2Client });
-
-    const event = {
+    const calEvent = {
       summary: "Consultation Meeting",
       description: "Scheduled consultation meeting.",
-      start: { dateTime: new Date().toISOString(), timeZone: "UTC" },
-      end: { dateTime: new Date(Date.now() + 60 * 60 * 1000).toISOString(), timeZone: "UTC" },
+      start: { dateTime: startTime, timeZone: "Asia/Kolkata" },
+      end: { dateTime: endTime, timeZone: "Asia/Kolkata" },
       attendees: [
         { email: userEmail }, // Ensure user email is provided
         { email: consultant.email } // Ensure consultant email is included
@@ -55,7 +57,7 @@ export async function createGoogleMeet(consultantId: string, userEmail: string) 
     try {
       const response = await calendar.events.insert({
         calendarId: "primary",
-        requestBody: event,
+        requestBody: calEvent,
         conferenceDataVersion: 1,
       });
 
@@ -70,7 +72,7 @@ export async function createGoogleMeet(consultantId: string, userEmail: string) 
 
         const retryResponse = await calendar.events.insert({
           calendarId: "primary",
-          requestBody: event,
+          requestBody: calEvent,
           conferenceDataVersion: 1,
         });
 
