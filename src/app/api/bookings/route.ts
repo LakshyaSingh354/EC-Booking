@@ -44,12 +44,8 @@ export async function POST(req: NextRequest) {
     if (overlappingBooking) return NextResponse.json({ error: "Time slot already booked" }, { status: 413 });
 
     // Create Google Calendar Event and Meet Link
-    let meetLink = null;
-    try {
-      const meetLink = await createGoogleMeet(consultant._id, data.guestEmail);
-    } catch (error) {
-      console.error("Error creating Google Meet:", error);
-    }
+
+    const meetLink = await createGoogleMeet(consultant._id, data.guestEmail);
     console.log("Meet Link::", meetLink);
     // Create booking
     const bookingData = userId

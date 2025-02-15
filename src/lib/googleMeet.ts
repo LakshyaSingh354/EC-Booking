@@ -1,6 +1,33 @@
 import { google } from "googleapis";
 import { Consultant } from "@/models/Consultants";
 
+async function refreshAccessToken(consultant: any) {
+  if (!consultant.googleRefreshToken) {
+    throw new Error("Missing Google refresh token. Please reauthorize.");
+  }
+
+  const oauth2Client = new google.auth.OAuth2(
+    process.env.GOOGLE_CLIENT_ID,
+    process.env.GOOGLE_CLIENT_SECRET,
+    process.env.GOOGLE_REDIRECT_URI
+  );
+
+  oauth2Client.setCredentials({ refresh_token: consultant.googleRefreshToken });
+
+  try {
+    const { credentials } = await oauth2Client.refreshAccessToken();
+    
+    // Save the new access token
+    consultant.googleAccessToken = credentials.access_token;
+    await consultant.save();
+
+    return credentials.access_token;
+  } catch (error) {
+    console.error("Error refreshing Google access token:", error);
+    throw new Error("Failed to refresh access token.");
+  }
+}
+
 export async function createGoogleMeet(consultantId: string, userEmail: string) {
   try {
     const consultant = await Consultant.findById(consultantId);
@@ -25,13 +52,33 @@ export async function createGoogleMeet(consultantId: string, userEmail: string) 
       conferenceData: { createRequest: { requestId: Date.now().toString() } }
     };
 
-    const response = await calendar.events.insert({
-      calendarId: "primary",
-      requestBody: event,
-      conferenceDataVersion: 1,
-    });
+    try {
+      const response = await calendar.events.insert({
+        calendarId: "primary",
+        requestBody: event,
+        conferenceDataVersion: 1,
+      });
 
-    return response.data.conferenceData?.entryPoints?.[0]?.uri || null;
+      return response.data.conferenceData?.entryPoints?.[0]?.uri || null;
+    } catch (error: any) {
+      if (error.code === 401) {
+        console.warn("Access token expired, refreshing...");
+
+        // Refresh the token and retry
+        const newAccessToken = await refreshAccessToken(consultant);
+        oauth2Client.setCredentials({ access_token: newAccessToken });
+
+        const retryResponse = await calendar.events.insert({
+          calendarId: "primary",
+          requestBody: event,
+          conferenceDataVersion: 1,
+        });
+
+        return retryResponse.data.conferenceData?.entryPoints?.[0]?.uri || null;
+      }
+
+      throw error;
+    }
   } catch (error: any) {
     console.error("Error creating Google Meet:", error);
     throw error;
