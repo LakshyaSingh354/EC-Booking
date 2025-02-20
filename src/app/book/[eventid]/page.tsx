@@ -93,7 +93,7 @@ export default function BookEventPage() {
 
         if (bookingRes.ok) {
           alert("Booking successful!");
-          router.push("/");
+          router.push("http://localhost:8000/services");
         } else {
           alert("Booking failed");
         }
