@@ -13,7 +13,7 @@ export default function AddConsultantPage() {
 
     const consultantData = { name, email, expertise, avatar };
 
-    const res = await fetch("/api/consultants", {
+    const res = await fetch("/next/api/consultants", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(consultantData),

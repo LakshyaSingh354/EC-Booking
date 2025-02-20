@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,9 +23,24 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/auth/[...nextauth].ts", "src/lib/mongodb.ts", "src/app/api/events/[eventid]/route.js", "src/app/api/consultants/[consultantid]/route.js", "src/app/api/bookings/[consultantid]/route.js"],
-  "exclude": ["node_modules"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "next-env.d.ts",
+    "src/app/next/api/auth/[...nextauth].ts",
+    "src/app/api/bookings/[consultantid]/route.js",
+    "src/app/api/consultants/[consultantid]/route.js",
+    "src/app/api/events/[eventid]/route.js",
+    "src/lib/mongodb.ts",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

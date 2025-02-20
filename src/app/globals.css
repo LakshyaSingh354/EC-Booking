@@ -1,6 +1,25 @@
+/* Import third-party CSS */
+@import url('../../public/css/bootstrap.min.css');
+@import url('../../public/css/magnific-popup.css');
+@import url('../../public/css/fontawesome-all.min.css');
+@import url('../../public/css/odometer.css');
+@import url('../../public/css/jarallax.css');
+@import url('../../public/css/swiper-bundle.min.css');
+@import url('../../public/css/slick.css');
+@import url('../../public/css/aos.css');
+
+/* Custom styles */
+@import url('../../public/css/flaticon.css');
+@import url('../../public/css/style.css');  
+@import url('../../public/css/responsive.css');
+
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
 
 :root {
   --background: #ffffff;
@@ -9,8 +28,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ededed;
+    --foreground: #171717;
   }
 }
 

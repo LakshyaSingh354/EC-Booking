@@ -17,7 +17,7 @@ export default function SignUpPage() {
 		e.preventDefault();
 
 		// Send the user data to your signup API
-		const res = await fetch("/api/auth/signup", {
+		const res = await fetch("/next/next/api/auth/signup", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

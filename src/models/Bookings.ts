@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document, model } from "mongoose";
 
 export interface IBooking extends Document {
-    event: mongoose.Schema.Types.ObjectId;
+    event: string;
     user: mongoose.Schema.Types.ObjectId;
     consultant?: mongoose.Schema.Types.ObjectId;
     guestEmail: string;
@@ -13,7 +13,7 @@ export interface IBooking extends Document {
   
   const BookingSchema = new Schema<IBooking>(
     {
-      event: { type: Schema.Types.ObjectId, ref: "Event", required: true },
+      event: { type: String, ref: "Event", required: true },
       user: { type: Schema.Types.ObjectId, ref: "User", required: true },
       consultant: { type: Schema.Types.ObjectId, ref: "Consultant" },
       guestEmail: { type: String, required: true },

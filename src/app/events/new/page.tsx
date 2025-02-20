@@ -20,7 +20,7 @@ export default function CreateEventPage() {
   const [selectedConsultants, setSelectedConsultants] = useState<string[]>([]);
 
   useEffect(() => {
-    fetch("/api/consultants")
+    fetch("/next/api/consultants")
       .then((res) => res.json())
       .then((data) => setConsultants(data));
   }, []);
@@ -34,30 +34,30 @@ export default function CreateEventPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
   
-    if (!session?.user?.email) {
-      alert("You must be logged in to create an event.");
-      return;
-    }
+    // if (!session?.user?.email) {
+      // alert("You must be logged in to create an event.");
+      // router.replace("/auth/signin");
+      // return;
+    // }
   
     const eventData = {
       title,
       description,
       duration,
-      availability,
       consultants: selectedConsultants,
-      user: session.user.id,
+      user: session?.user?.id ?? "67b075c879cc493b203d029c",
       price
     };
-  
-    const res = await fetch("/api/events", {
+    console.log(eventData);
+    const res = await fetch("/next/api/events", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(eventData),
     });
-  
+    console.log(res);
     if (res.ok) {
       alert("Event created successfully!");
-      router.push("/events");
+      router.push("http://localhost:8000/admin/myapp/services/");
     } else {
       alert("Failed to create event");
     }

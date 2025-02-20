@@ -5,12 +5,7 @@ export interface IEvent extends Document {
   consultants: mongoose.Schema.Types.ObjectId[];
   title: string;
   description?: string;
-  duration: number; // in minutes
-  availability: {
-    day: string; // e.g., "Monday"
-    startTime: string; // "09:00"
-    endTime: string; // "17:00"
-  }[];
+  duration: number;
   price: number;
 }
 
@@ -21,13 +16,6 @@ const EventSchema = new Schema<IEvent>(
     title: { type: String, required: true },
     description: { type: String },
     duration: { type: Number, required: true },
-    availability: [
-      {
-        day: { type: String, required: true },
-        startTime: { type: String, required: true },
-        endTime: { type: String, required: true },
-      },
-    ],
     price: { type: Number, required: true },
   },
   { timestamps: true }

@@ -24,11 +24,11 @@ export default function EventsPage() {
 	const router = useRouter();
 
 	const fetchWithRetry = async (retries = 5) => {
-		const url = "/api/events";
+		const url = "/next/api/events";
 		for (let i = 0; i < retries; i++) {
 			try {
-				fetch("/api/user");
-				fetch("/api/consultants");
+				fetch("/next/api/user");
+				fetch("/next/api/consultants");
 				const response = await fetch(url);
 				if (response.status === 500) {
 					console.warn(`Retrying due to 500 error: Attempt ${i + 1}`);
@@ -52,7 +52,7 @@ export default function EventsPage() {
 		<div className="w-1/2 mx-auto mt-28">
 			<h1 className="text-2xl font-bold">Available Events</h1>
 			<button
-				onClick={() => signOut({ callbackUrl: "/" })}
+				onClick={() => signOut()}
 				className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg"
 			>
 				Logout
@@ -96,7 +96,7 @@ export default function EventsPage() {
 						<button
 							className="border-2 max-h-9 border-green-600 text-white px-4 py-1 rounded-lg"
 							onClick={() => {
-								router.push(`/events/${event._id}`);
+								router.push(`/events/${event.title}`);
 							}}
 						>
 							View

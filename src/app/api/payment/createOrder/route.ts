@@ -12,12 +12,13 @@ export async function POST(req: Request) {
 	try {
 		await connectDB();
 		const data = await req.json();
-		const event = await Event.findById(data.event);
+		console.log(decodeURIComponent(data.event));
+		const event = await Event.findOne({title: decodeURIComponent(data.event)});
 
 		if (!event) {
 			return NextResponse.json(
 				{ error: "Event not found" },
-				{ status: 404 }
+				{ status: 444 }
 			);
 		}
 

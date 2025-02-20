@@ -8,7 +8,7 @@ export default function ConsultantsPage() {
   const [consultants, setConsultants] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch("/api/consultants")
+    fetch("/next/api/consultants")
       .then((res) => res.json())
       .then((data) => setConsultants(data));
   }, []);

@@ -1,5 +1,3 @@
-export const dynamic = "force-dynamic";
-
 import { authenticate } from "@/app/middleware/authMiddleware";
 import { createGoogleMeet } from "@/lib/googleMeet";
 import { connectDB } from "@/lib/mongodb";
@@ -17,7 +15,7 @@ export async function POST(req: NextRequest) {
 		let userId = "user" in auth ? auth.user._id : null;
 
 		// Check event exists
-		const event = await Event.findById(data.event);
+		const event = await Event.findOne({title: decodeURIComponent(data.event)});
 		if (!event)
 			return NextResponse.json(
 				{ error: "Event not found" },
@@ -45,7 +43,7 @@ export async function POST(req: NextRequest) {
 
 		// Check overlapping bookings
 		const overlappingBooking = await Booking.findOne({
-			event: data.event,
+			event: decodeURIComponent(data.event),
 			consultant: consultant._id,
 			startTime: { $lt: data.endTime },
 			endTime: { $gt: data.startTime },
@@ -69,7 +67,7 @@ export async function POST(req: NextRequest) {
 		// Create booking
 		const bookingData = userId
 			? { ...data, user: userId, consultant: consultant._id, meetLink }
-			: { ...data, consultant: consultant._id, meetLink };
+			: { ...data, user: '67b075c879cc493b203d029c', consultant: consultant._id, meetLink };
 
 		const booking = await Booking.create(bookingData);
 

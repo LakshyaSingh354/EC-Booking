@@ -32,7 +32,11 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   pages: {
-    signOut: "/",
+    signIn: "/next/api/auth/signin",
+    signOut: "/next/api/auth/signout",
+    error: "/next/api/auth/error",
+    verifyRequest: "/next/api/auth/verify-request",
+    newUser: "/next/api/auth/new-user",
   },
   callbacks: {
     async jwt({ token, user, account }) {

@@ -5,10 +5,11 @@ const nextConfig: NextConfig = {
 };
 
 module.exports = {
+  basePath: "/next",
   async headers() {
     return [
       {
-        source: "/api/auth/:path*",
+        source: "/next/api/auth/:path*",
         headers: [
           {
             key: "Access-Control-Allow-Credentials",

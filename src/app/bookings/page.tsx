@@ -29,7 +29,7 @@ export default function BookingsPage() {
   useEffect(() => {
     if (!session) return;
 
-    fetch(`/api/bookings?user=${session.user?.email}`)
+    fetch(`/next/api/bookings?user=${session.user?.email}`)
       .then((res) => res.json())
       .then(setBookings);
   }, [session]);

@@ -1,3 +1,5 @@
+"use server";
+
 import { connectDB } from "@/lib/mongodb";
 import { Event } from "@/models/Events";
 import { NextRequest, NextResponse } from "next/server";

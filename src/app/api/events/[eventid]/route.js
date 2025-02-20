@@ -9,7 +9,7 @@ export async function GET(
 ) {
   await connectDB();
   const eventid = context.params.eventid;
-  const event = await Event.findById(eventid).populate('consultants');
+  const event = await Event.findOne({title: eventid}).populate('consultants');
   
   if (!event) {
     return NextResponse.json({ error: "Event not found" }, { status: 404 });

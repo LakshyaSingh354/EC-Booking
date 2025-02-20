@@ -21,12 +21,12 @@ export default function BookEventPage() {
   const [paymentLoading, setPaymentLoading] = useState(false);
 
   useEffect(() => {
-    fetch(`/api/events/${eventId}`)
+    fetch(`/next/api/events/${eventId}`)
       .then((res) => res.json())
       .then(setEvent);
 
     if (consultantId) {
-      fetch(`/api/consultants/${consultantId}`)
+      fetch(`/next/api/consultants/${consultantId}`)
         .then((res) => res.json())
         .then(setConsultant);
     }
@@ -55,7 +55,7 @@ export default function BookEventPage() {
       endTime,
     };
     // Create a Razorpay order
-    const paymentRes = await fetch("/api/payment/createOrder", {
+    const paymentRes = await fetch("/next/api/payment/createOrder", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ event: eventId, amount: event!.price }),
@@ -85,7 +85,7 @@ export default function BookEventPage() {
       handler: async (response: any) => {
         const bookingDataWithPayment = { ...bookingData, paymentId: response.razorpay_payment_id };
 
-        const bookingRes = await fetch("/api/bookings", {
+        const bookingRes = await fetch("/next/api/bookings", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(bookingDataWithPayment),
@@ -93,7 +93,7 @@ export default function BookEventPage() {
 
         if (bookingRes.ok) {
           alert("Booking successful!");
-          router.push("/bookings");
+          router.push("/");
         } else {
           alert("Booking failed");
         }

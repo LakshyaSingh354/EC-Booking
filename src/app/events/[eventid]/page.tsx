@@ -2,15 +2,17 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
+import { connectDB } from "@/lib/mongodb";
+import { Event } from "@/models/Events";
+
 
 export default function EventDetailsPage() {
   const router = useRouter();
   const { eventid } = useParams();
   const [event, setEvent] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
-    fetch(`/api/events/${eventid}`)
+    fetch(`/next/api/events/${eventid}`)
       .then((res) => res.json())
       .then((data) => {
         setEvent(data);
@@ -55,12 +57,12 @@ export default function EventDetailsPage() {
         </div>
       )}
 
-      <button
+      {/* <button
         onClick={() => handleBooking()}
         className="mt-6 w-full px-4 py-2 bg-green-500 text-white rounded"
       >
         Not sure? Book without a consultant and we'll assign one for you
-      </button>
+      </button> */}
     </div>
   );
 }
