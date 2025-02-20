@@ -51,17 +51,11 @@ export default function EventsPage() {
 	return (
 		<div className="w-1/2 mx-auto mt-28">
 			<h1 className="text-2xl font-bold">Available Events</h1>
-			<button
-				onClick={() => signOut()}
-				className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg"
-			>
-				Logout
-			</button>
 			<ul className="mt-4 space-y-4">
 				{events.map((event) => (
 					<li
 						key={event._id}
-						className="p-4 rounded-xl bg-gray-800 px-4 space-x-8 flex justify-between items-center shadow-xl"
+						className="p-4 rounded-xl bg-gray-200 px-4 space-x-8 flex justify-between items-center shadow-xl"
 					>
 						<div>
 							<span className="text-xl font-bold">
@@ -94,7 +88,7 @@ export default function EventsPage() {
 							</div>
 						</div>
 						<button
-							className="border-2 max-h-9 border-green-600 text-white px-4 py-1 rounded-lg"
+							className="border-2 max-h-9 border-green-600 text-black px-4 py-1 rounded-lg"
 							onClick={() => {
 								router.push(`/events/${event.title}`);
 							}}
