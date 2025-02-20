@@ -64,7 +64,7 @@ export default function EventsPage() {
 							<div className="mt-2 space-x-4 flex">
 								{event.consultants.map((consultant) => (
 									<Link
-										href={`/book/${event._id}?consultantId=${consultant._id}`}
+										href={`/book/${event.title}?consultantId=${consultant._id}`}
 										key={consultant._id}
 									>
 										<div
