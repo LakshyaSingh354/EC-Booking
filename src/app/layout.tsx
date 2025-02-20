@@ -1,7 +1,3 @@
-import '../../public/css/bootstrap.min.css';
-import '../../public/css/style.css';
-import '../../public/css/responsive.css';
-
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import SessionProvider from "../components/SessionProvider";
