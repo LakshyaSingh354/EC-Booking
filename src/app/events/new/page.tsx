@@ -57,7 +57,7 @@ export default function CreateEventPage() {
     console.log(res);
     if (res.ok) {
       alert("Event created successfully!");
-      router.push("http://localhost:8000/admin/myapp/services/");
+      router.push("https://ec-booking-django.onrender.com/admin/myapp/services/");
     } else {
       alert("Failed to create event");
     }

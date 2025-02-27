@@ -6,6 +6,17 @@ const nextConfig: NextConfig = {
 
 module.exports = {
   basePath: "/next",
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: "/next/api/auth/:path*",
+  //       destination: "/api/auth/:path*",
+  //     },
+  //   ];
+  // },
+  env: {
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL
+ },
   async headers() {
     return [
       {

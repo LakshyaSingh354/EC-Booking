@@ -93,7 +93,7 @@ export default function BookEventPage() {
 
         if (bookingRes.ok) {
           alert("Booking successful!");
-          router.push("http://localhost:8000/services/");
+          router.push("https://ec-booking-django.onrender.com/services/");
         } else {
           alert("Booking failed");
         }

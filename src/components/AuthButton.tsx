@@ -35,21 +35,13 @@ export default function AuthButton() {
   useEffect(() => {
     if (session) {
       if (session.user!.role === "consultant") {
-        router.push("/consultant-dashboard");
-      } else {
-        router.push("/home");
+        router.push("https://ec-booking-django.onrender.com/admin/login");
       }
     }
   }, [session, router]);
 
   return (
     <div>
-      {session ? (
-        <div>
-          <p>Welcome, {session.user?.name}!</p>
-          <button onClick={() => signOut()}>Sign out</button>
-        </div>
-      ) : (
         <div>
           <button onClick={() => setShowRoleSelection(true)}>Sign in with Google</button>
 
@@ -61,7 +53,6 @@ export default function AuthButton() {
             </div>
           )}
         </div>
-      )}
     </div>
   );
 }
