@@ -32,13 +32,13 @@ export default function AuthButton() {
   }
 
   // Redirect user based on role after login
-  useEffect(() => {
-    if (session) {
-      if (session.user!.role === "consultant") {
-        router.push("https://ec-booking-django.onrender.com/myadmin/");
-      }
-    }
-  }, [session, router]);
+  // useEffect(() => {
+  //   if (session) {
+  //     if (session.user!.role === "consultant") {
+  //       router.push("https://ec-booking-django.onrender.com/myadmin/");
+  //     }
+  //   }
+  // }, [session, router]);
 
   return (
     <div>
