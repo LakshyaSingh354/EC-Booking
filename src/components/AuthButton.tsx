@@ -35,7 +35,7 @@ export default function AuthButton() {
   useEffect(() => {
     if (session) {
       if (session.user!.role === "consultant") {
-        router.push("https://ec-booking-django.onrender.com/admin/login");
+        router.push("https://ec-booking-django.onrender.com/myadmin/");
       }
     }
   }, [session, router]);
@@ -43,7 +43,7 @@ export default function AuthButton() {
   return (
     <div>
         <div>
-          <button onClick={() => setShowRoleSelection(true)}>Sign in with Google</button>
+          <button onClick={() => handleSignIn("consultant")} className="shadow-lg bg-gray-200 p-4">Sign in as Consultant</button>
 
           {showRoleSelection && (
             <div className="modal">
